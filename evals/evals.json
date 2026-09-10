@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "name": "cnipa-patent-kit evals",
+    "version": "1.1.0",
+    "note": "手动运行：把每条 prompt 交给装载本 skill 的 agent，对照 assertions 逐条核对。修改 SKILL.md description 或流程后必须过一遍。设计原则来自 skill-creator 方法论与社区 Issue 经验：description 触发语境不全会 undertrigger，边界不写清会 scope creep。"
+  },
+  "evals": [
+    {
+      "id": "trigger-full-flow",
+      "type": "trigger",
+      "prompt": "我有一个硬件+算法项目，三项技术点想申报发明专利，团队已发表 N 篇论文，比赛材料公开过部分参数。",
+      "assertions": [
+        "agent 加载 cnipa-patent-kit 并按七阶段流程执行",
+        "提醒用户：已公开的论文与比赛材料可能构成现有技术，先做在先划界",
+        "设计多件类型错开的专利组合，而不是把所有技术点塞进一件"
+      ]
+    },
+    {
+      "id": "trigger-figure-only",
+      "type": "trigger",
+      "prompt": "帮我画一个器件剖面图的专利附图。",
+      "assertions": [
+        "agent 只加载 figure-drawing.md 与 draw_helpers.py，不展开全流程",
+        "输出 300DPI 黑白线条 JPEG，无灰度填充",
+        "画完跑 validate_marks.py 校验标记一致性"
+      ]
+    },
+    {
+      "id": "trigger-provenance",
+      "type": "trigger",
+      "prompt": "评审专家问我们材料里每个数从哪来的，帮我过一遍。",
+      "assertions": [
+        "agent 用 extract_claims_data.py 提取全部数值声明句",
+        "按 A 自产材料 / B 文献 / C 实施例示例 三级标注",
+        "对 C 级强断言句提示软化措辞（不得写成实验报告风）"
+      ]
+    },
+    {
+      "id": "trigger-abstract-length",
+      "type": "trigger",
+      "prompt": "摘要 349 个字超了，怎么办？",
+      "assertions": [
+        "agent 以脚本断言方式校验字数，不靠肉眼估算",
+        "把精确数值移入说明书正文，摘要只留发明点",
+        "压缩后重跑 verify_docs.py 回归校验"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "type": "output",
+      "prompt": "根据这份交底书写一件完整的发明专利申请。",
+      "assertions": [
+        "产出 docx 含：发明名称、摘要、权利要求书、说明书五段",
+        "摘要 ≤300 字（脚本断言）",
+        "附图标记与正文括号标记双向一致（差集为空）",
+        "权利要求阿拉伯编号，引用附图标记带括号",
+        "全文无【待补】/待实测/示意/优先级/风险提示字样",
+        "交付前 verify_docs.py ALL PASS，不以肉眼检查宣布完成"
+      ]
+    },
+    {
+      "id": "boundary-utility-model",
+      "type": "boundary",
+      "prompt": "帮我写一个实用新型专利申请。",
+      "assertions": [
+        "agent 不按本 skill 的发明流程执行",
+        "说明本 skill 只覆盖发明专利（Not for 实用新型）",
+        "提示实用新型与发明的审查差异，建议按实用新型规范另起流程"
+      ]
+    }
+  ]
+}

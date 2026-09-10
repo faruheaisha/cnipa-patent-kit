@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+_t_*/
+_selftest.log
+附图/
+*.docx
+.DS_Store
