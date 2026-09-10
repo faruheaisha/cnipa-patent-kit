@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "cnipa-patent-kit evals",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "note": "手动运行：把每条 prompt 交给装载本 skill 的 agent，对照 assertions 逐条核对。修改 SKILL.md description 或流程后必须过一遍。设计原则来自 skill-creator 方法论与社区 Issue 经验：description 触发语境不全会 undertrigger，边界不写清会 scope creep。"
   },
   "evals": [
@@ -46,6 +46,28 @@
       ]
     },
     {
+      "id": "trigger-post-filing-notice",
+      "type": "trigger",
+      "prompt": "六个专利都提交了，我在专利业务办理系统的通知书列表里看到十几条，而且点进去只显示要签名，受理通知书到底在哪下载？",
+      "assertions": [
+        "agent 加载 post-filing.md，说明通知书条数不等于申请件数，应按申请号列去重计数",
+        "说明未确认列表里点通知书名称是接收确认（需移动端 APP 扫码数字签名），不是查看文件",
+        "给出正确路径：批量接收确认 → 已确认列表 → 点名称查看与下载/批量导出",
+        "提醒电子发文自发出之日起满 15 日即推定为收到日，未做接收确认不改变该推定"
+      ]
+    },
+    {
+      "id": "trigger-post-filing-deadline",
+      "type": "trigger",
+      "prompt": "提交时什么都没勾选，系统提示 2029-09-09 前提交实质审查请求书，我们是不是要撤回重新提交？接下来还该做什么？",
+      "assertions": [
+        "明确不需要撤回重交，在期限内单独提交《实质审查请求书》并缴实审费即可",
+        "区分两个期限：申请费+公布印刷费自申请日起 2 个月内（唯一紧急项）、实审请求 3 年内",
+        "说明国知局只在实审期限届满前 3 个月提醒一次，必须自建期限表",
+        "提示提前公布会使方案成为自己其他关联申请的对比文件，须与划界结论一并决定"
+      ]
+    },
+    {
       "id": "output-contract",
       "type": "output",
       "prompt": "根据这份交底书写一件完整的发明专利申请。",
@@ -59,6 +81,17 @@
       ]
     },
     {
+      "id": "output-post-filing-handover",
+      "type": "output",
+      "prompt": "六件发明专利已经提交，给我一份提交后要办的事项清单。",
+      "assertions": [
+        "按申请号逐件列出期限表：申请日、申请费+公布印刷费截止日、实审请求截止日",
+        "标注唯一紧急项（申请费 2 个月）与最长窗口项（实审请求 3 年）",
+        "提示通知书接收确认与归档、以及受理通知书到手后核对著录项目",
+        "提示开通电子发文短信/邮箱提醒"
+      ]
+    },
+    {
       "id": "boundary-utility-model",
       "type": "boundary",
       "prompt": "帮我写一个实用新型专利申请。",
@@ -66,6 +99,16 @@
         "agent 不按本 skill 的发明流程执行",
         "说明本 skill 只覆盖发明专利（Not for 实用新型）",
         "提示实用新型与发明的审查差异，建议按实用新型规范另起流程"
+      ]
+    },
+    {
+      "id": "boundary-outside-cnipa",
+      "type": "boundary",
+      "prompt": "帮我申请一个美国专利，走 USPTO。",
+      "assertions": [
+        "agent 不按本 skill 流程执行",
+        "说明本 skill 只覆盖 CNIPA 中国发明专利申请（Not for 境外申请）",
+        "提示在中国完成的发明创造向外国申请前须先做保密审查"
       ]
     }
   ]
