@@ -18,7 +18,7 @@
 
 ```
 cnipa-patent-kit/
-├── SKILL.md                      # 入口（七阶段流程 + Output Contract + 硬性红线）
+├── SKILL.md                      # 入口（八阶段流程 + Output Contract + 硬性红线）
 ├── references/
 │   ├── prior-art-mapping.md      # 在先专利划界方法论
 │   ├── drafting-spec.md          # 撰写规范全文（细则 20-23 条）
@@ -60,7 +60,7 @@ npx skills add faruheaisha/cnipa-patent-kit
 
 > 我有三项技术点（…），想申报发明专利，已发表 N 篇论文，比赛材料公开过部分参数。
 
-agent 会按 SKILL.md 七阶段走：交底整理 → 体系设计 → 在先划界 → 撰写 → 附图 → 溯源审核 → 提交底稿 + 回归校验。
+agent 会按 SKILL.md 八阶段走：交底整理 → 体系设计 → 在先划界 → 撰写 → 附图 → 溯源审核 → 提交底稿 + 回归校验 → 提交后期限管理。
 
 单独画图 / 校验也可直接用脚本：
 
