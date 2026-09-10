@@ -2,8 +2,8 @@
 name: cnipa-patent-kit
 description: "CNIPA 中国发明专利申请全流程工具包：从技术交底到可提交的五书底稿。Use when 用户要申请或撰写发明专利、设计多件专利组合、做在先专利划界/查重、写权利要求书/说明书/摘要、画专利附图、核对数据出处、生成提交底稿，或对已有专利材料做合规校验——即使只做其中一个环节（只画图、只压摘要字数、只查附图标记一致性）也应使用本 skill。覆盖：①多件专利体系设计与在先专利权利要求逐条划界（抵触申请/现有技术分析、术语黑名单、高风险重构策略）；②按《专利法实施细则》20-23 条生成正式申请文本（五段标题、摘要≤300字断言、附图标记括号一致性、权利要求阿拉伯编号、疾病诊断红线规避）；③matplotlib 黑白线条附图自动布局（300DPI JPEG 符合 cponline 上传规范：链式流程图/曼哈顿走线/文字自动缩号/编号一致性校验）；④数据溯源审核（数值声明自动提取→A/B/C 三级溯源表）；⑤生成 CNIPA 在线编辑器 5 标签页提交底稿 + python-docx 回归校验。Not for: 实用新型、外观设计、商标、著作权、PCT/USPTO/EPO 等境外申请、侵权诉讼分析、代理费减代办。Triggers: 专利申请, 发明专利, 专利撰写, 权利要求, 说明书, 专利摘要, 摘要超字数, 专利附图, 专利图, 实施例, 数据溯源, 在先专利, 划界, 交底书, 五书, 请求书, CNIPA, 国家知识产权局, patent application, claims drafting, patent figures, prior art mapping."
 metadata:
-  version: "1.1.0"
-  last_updated: "2026-09-09"
+  version: "1.1.1"
+  last_updated: "2026-09-10"
   status: active
   license: MIT
   task_type: structured-deliverable
@@ -32,6 +32,7 @@ metadata:
 ```
 阶段1 交底整理 → 阶段2 体系设计 → 阶段3 在先划界 → 阶段4 正文撰写
      → 阶段5 附图绘制 → 阶段6 数据溯源审核 → 阶段7 提交底稿与回归校验
+     → 阶段8 提交后程序与期限管理（缴费/实审/公布的法定时限）
 ```
 
 各阶段详情按需加载（渐进式披露：本文件只给流程与契约，细节在 references）：
@@ -39,7 +40,7 @@ metadata:
 - 阶段 4（撰写规范全文）：读 [references/drafting-spec.md](references/drafting-spec.md)
 - 阶段 5（附图规范与脚本用法）：读 [references/figure-drawing.md](references/figure-drawing.md)
 - 阶段 6（数据溯源方法）：读 [references/data-provenance.md](references/data-provenance.md)
-- 阶段 7（提交与校验）：读 [references/submission-checklist.md](references/submission-checklist.md)
+- 阶段 7-8（提交规范、回归校验与提交后期限管理）：读 [references/submission-checklist.md](references/submission-checklist.md)
 
 ## Quick Start（最小可用路径）
 
